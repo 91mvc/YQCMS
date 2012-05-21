@@ -1,0 +1,83 @@
+﻿body{font-size:12px;}
+.menu{width:100%;clear:both;  background:#222 url(../image/menu/topnav_bg.gif) repeat-x;  float: left;      
+       }
+.clear{clear:both;}
+ul.topnav {   
+    list-style: none;   
+    padding:0 20px;   
+ 
+    font-size: 1.2em; 
+    width: 1060px;
+    margin:0 auto; 
+}   
+ul.topnav li {   
+    float: left;   
+    margin: 0;   
+    padding: 0 15px 0 0;   
+    position: relative; 
+}   
+ul.topnav li a{   
+    padding: 10px 5px;   
+    color: #fff;   
+    display: block;   
+    text-decoration: none;   
+    float: left;   
+}   
+ul.topnav li a:hover{   
+    background: url(../image/menu/topnav_hover.gif) no-repeat center top;   
+}   
+ul.topnav li span {  
+    width: 17px;   
+    height: 38px;   
+    float: left;   
+    background: url(../image/menu/subnav_btn.gif) no-repeat center 5px;   
+}   
+ul.topnav li span.subhover 
+{
+	background-position: center bottombottom; 
+	cursor: pointer;
+}
+ul.topnav li ul.subnav {   
+    list-style: none;   
+    position: absolute; 
+    left: 0; top: 35px;   
+    background:green;   
+    margin: 0; padding: 0;   
+    display: none;   
+    float: left;   
+    width: 170px;   
+    border: 1px solid #111;
+    border-left:0;   
+}   
+ul.topnav li ul.subnav li{   
+    margin: 0; padding: 0;   
+    border-top: 1px solid #252525;
+    border-bottom: 1px solid #444; 
+    clear: both;   
+    width: 170px;   
+}   
+html ul.topnav li ul.subnav li a {   
+    float: right;   
+    width: 145px;   
+    background: #333 url(../image/menu/dropdown_linkbg.gif) no-repeat 145px 80px;
+    padding-left: 15px;   
+}
+html ul.topnav li ul.subnav li a:hover {
+    background-color: #222;
+} 
+
+ul.topnav li ul.subnav2 {   
+    list-style: none;   
+    position: absolute; 
+    left: 170px; top: 0;   
+    background: red;   
+    margin: 0; padding: 0;   
+    display: none;   
+    float: left;   
+    width: 170px;   
+    border: 1px solid #111;   
+}
+
+
+.commentlist li{background:#ccc;}
+.commentpager a,.commentpager span{margin-left:5px;}

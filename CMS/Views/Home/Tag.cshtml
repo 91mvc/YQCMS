@@ -1,0 +1,67 @@
+﻿@model IEnumerable<YQCMS.Models.cms_varticle> 
+@{YQCMS.General.GeneralConfigInfo ci = @ViewBag.CI as YQCMS.General.GeneralConfigInfo;}
+@section Css{
+    <link href="@Url.Content("~/Content" + @ci.WebPath + "css/Pager.css")" rel="stylesheet" type="text/css" />
+}
+<div class="web-path">您的位置是：@Html.ActionLink("主页", "Index", "Home") \ @ViewBag.Path</div>
+<div class="left">
+    @if ((Model as IEnumerable<YQCMS.Models.cms_varticle>).Count() > 0)
+    {  
+        <div class="articlelist">
+            @foreach (var item in Model)
+            {
+            <div id="post-@(item.id)" class="post bottom_border">
+              <div class="post_image" id="simg_@(item.id)"></div>
+              <div class="preview">
+                    <div class="post_taxonomy">
+                      @Html.Raw(item.catepath)        
+                    </div>
+                    <h2 class="post_title">
+                      @Html.ActionLink(item.title, "article", "home", new { id = item.id }, new { title = item.title })
+                    </h2>
+
+                    <div class="post_meta">
+                    <span class="post_meta_words">
+                      @(item.createdate)
+                      @if (item.subcount > 0)
+                      {   
+                        <a title="Comment" href="@(ci.WebPath)home/article/@(item.id)#comments"> @(item.subcount) 条评论</a> 
+                      }               
+                      </span>
+                     </div>
+                    <div class="text">
+                      @Html.Raw(item.summary)
+                    </div>
+                    
+              </div> 
+                   <p class="more-link-wrap">(<a class="more-link" href="@(ci.WebPath)home/article/@(item.id)">全文</a>)</p>     
+            </div>   
+            }
+        </div>
+    }
+    else
+    {
+        <div class="red p10">还没有数据。</div> 
+    }
+    <div class="pager cl">
+    </div>
+</div>
+<div class="right"></div>
+@section Js{
+    <script src="@Url.Content("~/Scripts/jquery.pager.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        @Html.Raw(ViewBag.SummaryImgs)
+        var pageNo = @ViewBag.PageNo;
+        var pageCount = @ViewBag.PageCount;
+        var tag='@ViewBag.Tag';
+        $(function () {
+            LoadSummaryImg();
+            if (pageCount == 0) { $(".pager").hide() }
+            $(".pager").pager({ pagenumber: pageNo, pagecount: pageCount, buttonClickCallback: PageClick });
+        });
+
+        PageClick = function (no) {
+            window.location = "?pageNo=" + no;
+        }
+    </script>
+}

@@ -1,0 +1,6 @@
+﻿@if(Request.IsAuthenticated) {
+    <p><img width="16" height="19" alt=" " src="/Content@(ViewBag.CI.WebPath)image/admin/icon_user.gif">&nbsp;Hello, <a class="white" href="#">@User.Identity.Name</a> | @Html.ActionLink("管理", "Manage", "Account") | @Html.ActionLink("更改密码", "ChangePassword", "Account") | @Html.ActionLink("注销", "LogOff", "Account")</p>
+}
+else {
+    @:[ @Html.ActionLink("登录", "LogOn", "Account") ]
+}

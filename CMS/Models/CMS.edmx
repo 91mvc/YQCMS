@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CmsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="CmsModelStoreContainer">
+          <EntitySet Name="cms_article" EntityType="CmsModel.Store.cms_article" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="cms_articledetail" EntityType="CmsModel.Store.cms_articledetail" store:Type="Tables" store:Schema="dbo" store:Name="cms_articledetail">
+            <DefiningQuery>SELECT 
+      [cms_articledetail].[articleid] AS [articleid], 
+      [cms_articledetail].[seotitle] AS [seotitle], 
+      [cms_articledetail].[seodescription] AS [seodescription], 
+      [cms_articledetail].[seokeywords] AS [seokeywords], 
+      [cms_articledetail].[seometas] AS [seometas], 
+      [cms_articledetail].[rename] AS [rename], 
+      [cms_articledetail].[tags] AS [tags]
+      FROM [dbo].[cms_articledetail] AS [cms_articledetail]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="cms_varticle" EntityType="CmsModel.Store.cms_varticle" store:Type="Views" store:Schema="dbo" store:Name="cms_varticle">
+            <DefiningQuery>SELECT 
+      [cms_varticle].[id] AS [id], 
+      [cms_varticle].[typeid] AS [typeid], 
+      [cms_varticle].[cateid] AS [cateid], 
+      [cms_varticle].[catepath] AS [catepath], 
+      [cms_varticle].[articleid] AS [articleid], 
+      [cms_varticle].[parentid] AS [parentid], 
+      [cms_varticle].[layer] AS [layer], 
+      [cms_varticle].[subcount] AS [subcount], 
+      [cms_varticle].[catename] AS [catename], 
+      [cms_varticle].[userid] AS [userid], 
+      [cms_varticle].[username] AS [username], 
+      [cms_varticle].[title] AS [title], 
+      [cms_varticle].[summary] AS [summary], 
+      [cms_varticle].[content] AS [content], 
+      [cms_varticle].[viewcount] AS [viewcount], 
+      [cms_varticle].[orderid] AS [orderid], 
+      [cms_varticle].[replypermit] AS [replypermit], 
+      [cms_varticle].[status] AS [status], 
+      [cms_varticle].[ip] AS [ip], 
+      [cms_varticle].[favor] AS [favor], 
+      [cms_varticle].[against] AS [against], 
+      [cms_varticle].[iscommend] AS [iscommend], 
+      [cms_varticle].[istop] AS [istop], 
+      [cms_varticle].[createdate] AS [createdate], 
+      [cms_varticle].[lastreplydate] AS [lastreplydate], 
+      [cms_varticle].[lastreplyuser] AS [lastreplyuser], 
+      [cms_varticle].[seotitle] AS [seotitle], 
+      [cms_varticle].[seodescription] AS [seodescription], 
+      [cms_varticle].[seokeywords] AS [seokeywords], 
+      [cms_varticle].[seometas] AS [seometas], 
+      [cms_varticle].[rename] AS [rename], 
+      [cms_varticle].[tags] AS [tags], 
+      [cms_varticle].[url] AS [url]
+      FROM [dbo].[cms_varticle] AS [cms_varticle]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <EntityType Name="cms_article">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="typeid" Type="int" Nullable="false" />
+          <Property Name="cateid" Type="int" Nullable="false" />
+          <Property Name="catepath" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="articleid" Type="int" Nullable="false" />
+          <Property Name="parentid" Type="int" Nullable="false" />
+          <Property Name="layer" Type="int" Nullable="false" />
+          <Property Name="subcount" Type="int" Nullable="false" />
+          <Property Name="catename" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="username" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="title" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="summary" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="content" Type="ntext" Nullable="false" />
+          <Property Name="viewcount" Type="int" Nullable="false" />
+          <Property Name="orderid" Type="int" Nullable="false" />
+          <Property Name="replypermit" Type="tinyint" Nullable="false" />
+          <Property Name="status" Type="tinyint" Nullable="false" />
+          <Property Name="ip" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="favor" Type="int" Nullable="false" />
+          <Property Name="against" Type="int" Nullable="false" />
+          <Property Name="iscommend" Type="tinyint" Nullable="false" />
+          <Property Name="istop" Type="tinyint" Nullable="false" />
+          <Property Name="createdate" Type="datetime" Nullable="false" />
+          <Property Name="lastreplydate" Type="datetime" Nullable="false" />
+          <Property Name="lastreplyuser" Type="nchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“YqCms.dbo.cms_articledetail”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="cms_articledetail">
+          <Key>
+            <PropertyRef Name="articleid" />
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="articleid" Type="int" Nullable="false" />
+          <Property Name="seotitle" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="seodescription" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="seokeywords" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="seometas" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="rename" Type="nvarchar" Nullable="false" MaxLength="60" />
+          <Property Name="tags" Type="nvarchar" Nullable="false" MaxLength="60" />
+        </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“YqCms.dbo.cms_varticle”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="cms_varticle">
+          <Key>
+            <PropertyRef Name="id" />
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="typeid" Type="int" Nullable="false" />
+          <Property Name="cateid" Type="int" Nullable="false" />
+          <Property Name="catepath" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="articleid" Type="int" Nullable="false" />
+          <Property Name="parentid" Type="int" Nullable="false" />
+          <Property Name="layer" Type="int" Nullable="false" />
+          <Property Name="subcount" Type="int" Nullable="false" />
+          <Property Name="catename" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="username" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="title" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="summary" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="content" Type="ntext" Nullable="false" />
+          <Property Name="viewcount" Type="int" Nullable="false" />
+          <Property Name="orderid" Type="int" Nullable="false" />
+          <Property Name="replypermit" Type="tinyint" Nullable="false" />
+          <Property Name="status" Type="tinyint" Nullable="false" />
+          <Property Name="ip" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="favor" Type="int" Nullable="false" />
+          <Property Name="against" Type="int" Nullable="false" />
+          <Property Name="iscommend" Type="tinyint" Nullable="false" />
+          <Property Name="istop" Type="tinyint" Nullable="false" />
+          <Property Name="createdate" Type="datetime" Nullable="false" />
+          <Property Name="lastreplydate" Type="datetime" Nullable="false" />
+          <Property Name="lastreplyuser" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="seotitle" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="seodescription" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="seokeywords" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="seometas" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="rename" Type="nvarchar" Nullable="false" MaxLength="60" />
+          <Property Name="tags" Type="nvarchar" Nullable="false" MaxLength="60" />
+          <Property Name="url" Type="nvarchar" MaxLength="68" />
+        </EntityType>
+        <Function Name="cms_createarticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="typeid" Type="int" Mode="In" />
+          <Parameter Name="cateid" Type="int" Mode="In" />
+          <Parameter Name="catepath" Type="nvarchar" Mode="In" />
+          <Parameter Name="articleid" Type="int" Mode="In" />
+          <Parameter Name="parentid" Type="int" Mode="In" />
+          <Parameter Name="layer" Type="int" Mode="In" />
+          <Parameter Name="catename" Type="nvarchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="username" Type="nchar" Mode="In" />
+          <Parameter Name="title" Type="nvarchar" Mode="In" />
+          <Parameter Name="summary" Type="nvarchar" Mode="In" />
+          <Parameter Name="content" Type="ntext" Mode="In" />
+          <Parameter Name="replypermit" Type="tinyint" Mode="In" />
+          <Parameter Name="status" Type="tinyint" Mode="In" />
+          <Parameter Name="ip" Type="nvarchar" Mode="In" />
+          <Parameter Name="seotitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="seodescription" Type="nvarchar" Mode="In" />
+          <Parameter Name="seokeywords" Type="nvarchar" Mode="In" />
+          <Parameter Name="seometas" Type="nvarchar" Mode="In" />
+          <Parameter Name="rename" Type="nvarchar" Mode="In" />
+          <Parameter Name="tags" Type="nvarchar" Mode="In" />
+          <Parameter Name="iscommend" Type="tinyint" Mode="In" />
+          <Parameter Name="istop" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="cms_deletearticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="aid" Type="int" Mode="In" />
+          <Parameter Name="parentid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="cms_updatearticle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="aid" Type="int" Mode="In" />
+          <Parameter Name="typeid" Type="int" Mode="In" />
+          <Parameter Name="cateid" Type="int" Mode="In" />
+          <Parameter Name="catename" Type="nvarchar" Mode="In" />
+          <Parameter Name="catepath" Type="nvarchar" Mode="In" />
+          <Parameter Name="parentid" Type="int" Mode="In" />
+          <Parameter Name="title" Type="nvarchar" Mode="In" />
+          <Parameter Name="summary" Type="nvarchar" Mode="In" />
+          <Parameter Name="content" Type="ntext" Mode="In" />
+          <Parameter Name="replypermit" Type="tinyint" Mode="In" />
+          <Parameter Name="status" Type="tinyint" Mode="In" />
+          <Parameter Name="seotitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="seodescription" Type="nvarchar" Mode="In" />
+          <Parameter Name="seokeywords" Type="nvarchar" Mode="In" />
+          <Parameter Name="seometas" Type="nvarchar" Mode="In" />
+          <Parameter Name="rename" Type="nvarchar" Mode="In" />
+          <Parameter Name="tags" Type="nvarchar" Mode="In" />
+          <Parameter Name="iscommend" Type="tinyint" Mode="In" />
+          <Parameter Name="istop" Type="tinyint" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CmsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="CmsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cms_article" EntityType="CmsModel.cms_article" />
+          <EntitySet Name="cms_varticle" EntityType="CmsModel.cms_varticle" />
+          <EntitySet Name="cms_articledetail" EntityType="CmsModel.cms_articledetail" />
+        </EntityContainer>
+        <EntityType Name="cms_article">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cateid" Type="Int32" Nullable="false" />
+          <Property Name="catepath" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="articleid" Type="Int32" Nullable="false" />
+          <Property Name="parentid" Type="Int32" Nullable="false" />
+          <Property Name="layer" Type="Int32" Nullable="false" />
+          <Property Name="subcount" Type="Int32" Nullable="false" />
+          <Property Name="catename" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="true" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="summary" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="content" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="viewcount" Type="Int32" Nullable="false" />
+          <Property Name="orderid" Type="Int32" Nullable="false" />
+          <Property Name="replypermit" Type="Byte" Nullable="false" />
+          <Property Name="status" Type="Byte" Nullable="false" />
+          <Property Name="ip" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="createdate" Type="DateTime" Nullable="false" />
+          <Property Type="Int32" Name="typeid" Nullable="false" />
+          <Property Type="Int32" Name="favor" Nullable="false" />
+          <Property Type="Int32" Name="against" Nullable="false" />
+          <Property Type="Byte" Name="iscommend" Nullable="false" />
+          <Property Type="Byte" Name="istop" Nullable="false" />
+          <Property Type="DateTime" Name="lastreplydate" Nullable="false" />
+          <Property Type="String" Name="lastreplyuser" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="cms_varticle">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="cateid" Type="Int32" Nullable="false" />
+          <Property Name="catepath" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="articleid" Type="Int32" Nullable="false" />
+          <Property Name="parentid" Type="Int32" Nullable="false" />
+          <Property Name="layer" Type="Int32" Nullable="false" />
+          <Property Name="subcount" Type="Int32" Nullable="false" />
+          <Property Name="catename" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="true" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="summary" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="content" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="viewcount" Type="Int32" Nullable="false" />
+          <Property Name="orderid" Type="Int32" Nullable="false" />
+          <Property Name="replypermit" Type="Byte" Nullable="false" />
+          <Property Name="status" Type="Byte" Nullable="false" />
+          <Property Name="ip" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="createdate" Type="DateTime" Nullable="false" />
+          <Property Name="seotitle" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="seodescription" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="seokeywords" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="seometas" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="typeid" Nullable="false" />
+          <Property Type="Int32" Name="favor" Nullable="false" />
+          <Property Type="Int32" Name="against" Nullable="false" />
+          <Property Type="String" Name="rename" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="tags" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Type="Byte" Name="iscommend" Nullable="false" />
+          <Property Type="Byte" Name="istop" Nullable="false" />
+          <Property Type="DateTime" Name="lastreplydate" Nullable="false" />
+          <Property Type="String" Name="lastreplyuser" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="url" MaxLength="68" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="cms_articledetail">
+          <Key>
+            <PropertyRef Name="articleid" />
+          </Key>
+          <Property Type="Int32" Name="articleid" Nullable="false" />
+          <Property Type="String" Name="seotitle" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="seodescription" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="seokeywords" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="seometas" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="rename" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="tags" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CmsModelStoreContainer" CdmEntityContainer="CmsEntities">
+          <EntitySetMapping Name="cms_article"><EntityTypeMapping TypeName="CmsModel.cms_article"><MappingFragment StoreEntitySet="cms_article">
+            <ScalarProperty Name="lastreplyuser" ColumnName="lastreplyuser" />
+                <ScalarProperty Name="lastreplydate" ColumnName="lastreplydate" />
+                <ScalarProperty Name="istop" ColumnName="istop" />
+                <ScalarProperty Name="iscommend" ColumnName="iscommend" />
+                <ScalarProperty Name="against" ColumnName="against" />
+                <ScalarProperty Name="favor" ColumnName="favor" />
+                <ScalarProperty Name="typeid" ColumnName="typeid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="cateid" ColumnName="cateid" />
+            <ScalarProperty Name="catepath" ColumnName="catepath" />
+            <ScalarProperty Name="articleid" ColumnName="articleid" />
+            <ScalarProperty Name="parentid" ColumnName="parentid" />
+            <ScalarProperty Name="layer" ColumnName="layer" />
+            <ScalarProperty Name="subcount" ColumnName="subcount" />
+            <ScalarProperty Name="catename" ColumnName="catename" />
+            <ScalarProperty Name="userid" ColumnName="userid" />
+            <ScalarProperty Name="username" ColumnName="username" />
+            <ScalarProperty Name="title" ColumnName="title" />
+            <ScalarProperty Name="summary" ColumnName="summary" />
+            <ScalarProperty Name="content" ColumnName="content" />
+            <ScalarProperty Name="viewcount" ColumnName="viewcount" />
+            <ScalarProperty Name="orderid" ColumnName="orderid" />
+            <ScalarProperty Name="replypermit" ColumnName="replypermit" />
+            <ScalarProperty Name="status" ColumnName="status" />
+            <ScalarProperty Name="ip" ColumnName="ip" />
+            <ScalarProperty Name="createdate" ColumnName="createdate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="cms_varticle"><EntityTypeMapping TypeName="CmsModel.cms_varticle"><MappingFragment StoreEntitySet="cms_varticle">
+            <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="lastreplyuser" ColumnName="lastreplyuser" />
+                <ScalarProperty Name="lastreplydate" ColumnName="lastreplydate" />
+                <ScalarProperty Name="istop" ColumnName="istop" />
+                <ScalarProperty Name="iscommend" ColumnName="iscommend" />
+                <ScalarProperty Name="tags" ColumnName="tags" />
+                <ScalarProperty Name="rename" ColumnName="rename" />
+                <ScalarProperty Name="against" ColumnName="against" />
+                <ScalarProperty Name="favor" ColumnName="favor" />
+                <ScalarProperty Name="typeid" ColumnName="typeid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="cateid" ColumnName="cateid" />
+            <ScalarProperty Name="catepath" ColumnName="catepath" />
+            <ScalarProperty Name="articleid" ColumnName="articleid" />
+            <ScalarProperty Name="parentid" ColumnName="parentid" />
+            <ScalarProperty Name="layer" ColumnName="layer" />
+            <ScalarProperty Name="subcount" ColumnName="subcount" />
+            <ScalarProperty Name="catename" ColumnName="catename" />
+            <ScalarProperty Name="userid" ColumnName="userid" />
+            <ScalarProperty Name="username" ColumnName="username" />
+            <ScalarProperty Name="title" ColumnName="title" />
+            <ScalarProperty Name="summary" ColumnName="summary" />
+            <ScalarProperty Name="content" ColumnName="content" />
+            <ScalarProperty Name="viewcount" ColumnName="viewcount" />
+            <ScalarProperty Name="orderid" ColumnName="orderid" />
+            <ScalarProperty Name="replypermit" ColumnName="replypermit" />
+            <ScalarProperty Name="status" ColumnName="status" />
+            <ScalarProperty Name="ip" ColumnName="ip" />
+            <ScalarProperty Name="createdate" ColumnName="createdate" />
+            <ScalarProperty Name="seotitle" ColumnName="seotitle" />
+            <ScalarProperty Name="seodescription" ColumnName="seodescription" />
+            <ScalarProperty Name="seokeywords" ColumnName="seokeywords" />
+            <ScalarProperty Name="seometas" ColumnName="seometas" />
+          </MappingFragment></EntityTypeMapping>
+            <EntityTypeMapping TypeName="CmsModel.cms_varticle">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="CmsModel.Store.cms_createarticle">
+                  <ScalarProperty Name="istop" ParameterName="istop" />
+                  <ScalarProperty Name="iscommend" ParameterName="iscommend" />
+                  <ScalarProperty Name="tags" ParameterName="tags" />
+                  <ScalarProperty Name="rename" ParameterName="rename" />
+                  <ScalarProperty Name="typeid" ParameterName="typeid" />
+                  <ScalarProperty Name="seometas" ParameterName="seometas" />
+                  <ScalarProperty Name="seokeywords" ParameterName="seokeywords" />
+                  <ScalarProperty Name="seodescription" ParameterName="seodescription" />
+                  <ScalarProperty Name="seotitle" ParameterName="seotitle" />
+                  <ScalarProperty Name="ip" ParameterName="ip" />
+                  <ScalarProperty Name="status" ParameterName="status" />
+                  <ScalarProperty Name="replypermit" ParameterName="replypermit" />
+                  <ScalarProperty Name="content" ParameterName="content" />
+                  <ScalarProperty Name="summary" ParameterName="summary" />
+                  <ScalarProperty Name="title" ParameterName="title" />
+                  <ScalarProperty Name="username" ParameterName="username" />
+                  <ScalarProperty Name="userid" ParameterName="userid" />
+                  <ScalarProperty Name="catename" ParameterName="catename" />
+                  <ScalarProperty Name="layer" ParameterName="layer" />
+                  <ScalarProperty Name="parentid" ParameterName="parentid" />
+                  <ScalarProperty Name="articleid" ParameterName="articleid" />
+                  <ScalarProperty Name="catepath" ParameterName="catepath" />
+                  <ScalarProperty Name="cateid" ParameterName="cateid" />
+                  <ResultBinding Name="id" ColumnName="articleid" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="CmsModel.Store.cms_updatearticle">
+                  <ScalarProperty Name="istop" ParameterName="istop" Version="Current" />
+                  <ScalarProperty Name="iscommend" ParameterName="iscommend" Version="Current" />
+                  <ScalarProperty Name="catepath" ParameterName="catepath" Version="Current" />
+                  <ScalarProperty Name="tags" ParameterName="tags" Version="Current" />
+                  <ScalarProperty Name="rename" ParameterName="rename" Version="Current" />
+                  <ScalarProperty Name="typeid" ParameterName="typeid" Version="Current" />
+                  <ScalarProperty Name="id" ParameterName="aid" Version="Current" />
+                  <ScalarProperty Name="seometas" ParameterName="seometas" Version="Current" />
+                  <ScalarProperty Name="seokeywords" ParameterName="seokeywords" Version="Current" />
+                  <ScalarProperty Name="seodescription" ParameterName="seodescription" Version="Current" />
+                  <ScalarProperty Name="seotitle" ParameterName="seotitle" Version="Current" />
+                  <ScalarProperty Name="status" ParameterName="status" Version="Current" />
+                  <ScalarProperty Name="replypermit" ParameterName="replypermit" Version="Current" />
+                  <ScalarProperty Name="content" ParameterName="content" Version="Current" />
+                  <ScalarProperty Name="summary" ParameterName="summary" Version="Current" />
+                  <ScalarProperty Name="title" ParameterName="title" Version="Current" />
+                  <ScalarProperty Name="parentid" ParameterName="parentid" Version="Current" />
+                  <ScalarProperty Name="catename" ParameterName="catename" Version="Current" />
+                  <ScalarProperty Name="cateid" ParameterName="cateid" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="CmsModel.Store.cms_deletearticle">
+                  <ScalarProperty Name="id" ParameterName="aid" />
+                  <ScalarProperty Name="parentid" ParameterName="parentid" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="cms_articledetail">
+            <EntityTypeMapping TypeName="CmsModel.cms_articledetail">
+              <MappingFragment StoreEntitySet="cms_articledetail">
+                <ScalarProperty Name="tags" ColumnName="tags" />
+                <ScalarProperty Name="rename" ColumnName="rename" />
+                <ScalarProperty Name="seometas" ColumnName="seometas" />
+                <ScalarProperty Name="seokeywords" ColumnName="seokeywords" />
+                <ScalarProperty Name="seodescription" ColumnName="seodescription" />
+                <ScalarProperty Name="seotitle" ColumnName="seotitle" />
+                <ScalarProperty Name="articleid" ColumnName="articleid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="CMS" ZoomLevel="92">
+        <EntityTypeShape EntityType="CmsModel.cms_article" Width="1.5" PointX="0.75" PointY="0.75" Height="4.6573697916666656" IsExpanded="true" />
+        <EntityTypeShape EntityType="CmsModel.cms_varticle" Width="1.5" PointX="5.375" PointY="0.75" Height="6.3435677083333326" IsExpanded="true" />
+        <EntityTypeShape EntityType="CmsModel.cms_articledetail" Width="1.5" PointX="2.875" PointY="0.75" Height="2.1280729166666656" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

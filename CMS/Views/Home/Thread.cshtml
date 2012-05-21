@@ -1,0 +1,200 @@
+﻿@model YQCMS.Models.PostReplyModel
+@{YQCMS.Models.cms_varticle postinfo = ViewBag.Article as YQCMS.Models.cms_varticle;
+YQCMS.General.GeneralConfigInfo ci = @ViewBag.CI as YQCMS.General.GeneralConfigInfo;}
+@section Css{
+    <link href="@Url.Content("~/Content@(ci.WebPath)css/Pager.css")" rel="stylesheet" type="text/css" />
+}
+<div class="web-path">您的位置是：@Html.ActionLink("主页", "Index", "Home") \ @Html.Raw(ViewBag.WebPath)</div>
+<div class="left"></div>
+<div class="right"> 
+    @if ((ViewData["ThreadList"] as IEnumerable<YQCMS.Models.cms_article>).Count() > 0)
+    {
+        <div class="mb10 h30">
+            <a title="发帖" id="td_post" class="btnpost fr" href="#">发帖</a>
+            <a rel="nofollow" class="btnreplay fr mr10" href="#">回复</a>
+            <a class="w pages_pre fl" href="#">返回列表</a><div class="pager fl"></div>
+        </div>
+        
+        <div id="t_content cl">
+        <div class="readTop">
+            <table width="100%" style="table-layout:fixed;">
+                <tbody><tr>
+                    <td class="floot_left">
+                        <div class="readNum">
+                            <ul class="cc">
+                                <li><em>@postinfo.viewcount</em>阅读</li>
+                                <li><em id="topicRepliesNum">@postinfo.subcount</em>回复</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                    <h1 class="read_h1" id="subject_tpc">@postinfo.title</h1>
+                    </td>
+                    <td width="115" class="readStairs">
+                    <a rel="nofollow" title="上一主题" class="read_prev" href="#">上一主题</a>
+                    <a rel="nofollow" title="下一主题" class="read_next" href="#">下一主题</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <table width="100%" class="flootbg"><tbody><tr><td></td></tr></tbody></table>
+        @foreach (var item in ViewData["ThreadList"] as IEnumerable<YQCMS.Models.cms_article>)
+        {     
+            <div id="readfloor_tpc" class="read_t">
+                <table width="100%" class="floot">
+                <tbody>
+                    <tr>
+                    <td class="floot_left" rowspan="2">
+                        <div class="readName b">
+                        <span alt="在线" title="在线" class="women_ol mr5">在线</span><a href="#">@item.username</a>
+                        </div>
+                        <div class="floot_leftdiv">
+                        </div>
+                    </td>
+                    <td id="td_tpc" class="floot_right"><a name="post_tpc"></a>
+                        <div class="tipTop s6">
+                        <span class="fr">	
+                        @if (item.layer == 0)
+                        {
+                        <a class="mr5 s6" title="只看楼主的所有帖子" onclick="window.location=('#');return false;" href="javascript:;">只看楼主</a>
+                        }
+                        else
+                        {
+                        <a class="mr5 s6" title="只看该作者的所有帖子" onclick="window.location=('#');return false;" href="javascript:;">只看该作者</a>}
+                        
+                        @if (item.layer == 0)
+                        {
+                        <a rel="nofollow" class="mr5 s6" title="倒序阅读" href="#">倒序阅读</a>
+                        }
+                        </span>
+                        <a title="复制此楼地址" onclick="copyFloorUrl('tpc')" class="s2 b cp">楼主</a>&nbsp;&nbsp;<span title="2012-04-23 13:08:41">发表于: @item.createdate</span>
+                        </div>
+                        <!--content_read-->
+                        <div class="tpc_content">
+                        <div id="read_tpc" class="f14 mb10">
+                        @Html.Raw(item.content)
+                        </div>
+                        </div>
+                        <!--content_read-->
+                    </td>
+                    </tr>
+                    <tr>
+                    <td class="floot_bottom">
+                        <div class="tipBottom cc">
+                        <div class="fl readbot">
+                        <a onclick="" href="javascript:void(0);" title="回复此楼" class="r-reply">回复</a>
+                        </div>
+                        <div class="fr">
+                        <a class="mr5" href="javascript:;" title="举报此帖" onclick="sendmsg();">举报</a>
+                        </div>
+                        </div>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+@if (item.layer == 0)
+{
+                <table width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                    <td class="floot_left">
+                    </td>
+                    <td>
+                    <div class="shareAll cc">
+                    <em>分享到</em>
+                    xxxxx
+                    </div>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+}
+            </div>
+            <table width="100%" class="flootbg"><tbody><tr><td></td></tr></tbody></table>
+        }
+    </div>
+    <div class="pager">
+    </div>
+        
+    <script src="@Url.Content("~/Scripts/jquery.pager.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var pageNo = @ViewBag.PageNo;
+        var pageCount = @ViewBag.PageCount;
+        var postid=@postinfo.id;
+        $(function () {
+            if (pageCount == 0) { $(".pager").hide() }
+            $(".pager").pager({ pagenumber: pageNo, pagecount: pageCount, buttonClickCallback: PageClick });
+        });
+
+        PageClick = function (no) {
+            window.location = postid+"_" + no;;
+        }
+    </script>
+        
+    }
+
+@if (postinfo.replypermit < 3)
+{
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/kindeditor/kindeditor.js")" type="text/javascript"></script> 
+    <script src="@Url.Content("~/Scripts/kindeditor/lang/zh_CN.js")" type="text/javascript"></script> 
+            using (Html.BeginForm("PostReply", "home"))
+            {
+        <div class="mt20 cl">
+            <fieldset>
+                <legend> 回帖 </legend>
+                @Html.HiddenFor(m => m.PostId)
+                @Html.HiddenFor(m => m.CateId)
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.UserName)
+                </div>
+                <div class="editor-field">
+                    @if (string.IsNullOrWhiteSpace(Model.UserName))
+                    {
+                        @Html.TextBoxFor(m => m.UserName, new { style = "width: 200px;" })
+                    }
+                    else
+                    {
+                       @Html.TextBoxFor(m => m.UserName, new { style = "width: 200px;border:#fff", ReadOnly = "readonly" })
+                    }
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Message)
+                </div>
+                <div class="editor-field clstxtarea">
+                    @Html.TextAreaFor(model => model.Message, new { style = "width: 600px; height: 260px" })
+                    @Html.ValidationMessageFor(m => m.Message)
+                </div>
+                <p>
+                    <input type="submit" value="提交" id="BtnSubmit"/>
+                </p>
+            </fieldset>
+        </div>
+            }
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            var editorContent = null;
+
+            KindEditor.ready(function (K) {
+                editorContent = K.create('textarea[name="Message"]', {
+                    allowImageUpload: true,
+                    uploadJson: '@(ci.WebPath)admin/UploadFile',
+                    items: ['emoticons', 'link']
+                });
+            });
+
+            $("#BtnSubmit").click(function () {
+                editorContent.html(ReplaceKESpace(editorContent.html()));
+                editorContent.sync();
+            });
+        });
+    </script> 
+}
+</div>

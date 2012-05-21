@@ -1,0 +1,136 @@
+﻿@model YQCMS.Models.AlbumModel 
+@{YQCMS.General.GeneralConfigInfo ci = @ViewBag.CI as YQCMS.General.GeneralConfigInfo;} 
+<script src="@Url.Content("~/Scripts/jquery.ad-gallery.js")" type="text/javascript"></script> 
+@section Css{
+    <link href="@Url.Content("~/Content@(ci.WebPath)css/jquery.ad-gallery.css")" rel="stylesheet" type="text/css" />
+}  
+<div class="left"></div>
+<div class="right"> 
+    <div class="web-path">您的位置是：@Html.ActionLink("主页", "Index", "Home") \ @Html.Raw(Model.AlbumPath)</div>
+    <div class="album-show">
+        <h3 class="album_title">@Model.Title</h3>
+        <div class="album_time">@Model.Createdate 阅读(@Model.ViewCount) 
+        @if (Model.CommentCount > 0)
+        {
+        <a href="#comment">评论(@Model.CommentCount)</a> 
+        }
+        </div>
+        <div class="album_summary">@Html.Raw(Model.Description)</div>
+        <div class="album_content">
+
+            <div id="gallery" class="ad-gallery">
+              <div class="ad-image-wrapper">
+              </div>
+              <div class="ad-controls">
+              </div>
+              <div class="ad-nav">
+                <div class="ad-thumbs">
+                  <ul class="ad-thumb-list">
+                    @foreach (var item in Model.ImageList)
+                    {
+                        <li>
+                          <a href="/Content@(ci.WebPath)image/album/@item.Src">
+                            <img src="/Content@(ci.WebPath)image/album/s@(item.Src)" title="@item.Title" alt="@item.Alt">
+                          </a>
+                        </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="digg albumdigg">
+    <div class="digg_favor">@Model.Favor</div>
+    <div class="digg_against">@Model.Against</div>
+    <div class="digg_tip">@ViewBag.VoteTip</div>
+    </div>
+    <div class="prenextlink">@Html.Raw(ViewBag.PreNextLink)</div>
+    @Html.Action("reply", "home")
+</div>
+@section Js{
+<script type="text/javascript">
+    var editorReply = null;
+    var ArticleId = @ViewBag.ArticleId;
+    $(function () {
+
+        /*$('img.image1').data('ad-desc', 'xxx');
+        $('img.image1').data('ad-title', 'xxx');
+	    $('img#001').data('ad-desc', 'xxx')*/
+        var galleries = $('.ad-gallery').adGallery();
+	    /*slide-hori,slide-vert,resize,fade,wild*/
+        galleries[0].settings.effect = "fade";
+
+        $(".digg_favor").click(function () {
+                $(".digg_tip").html("提交中...");
+                $.ajax({
+                    url: "@(ci.WebPath)home/AjaxVote/",
+                    type: "post",
+                    data: {articleid:ArticleId,vote:1},
+                    dataType: 'json',
+                    success: function (re) {
+                        $(".digg_tip").html(re["message"]);
+                        if(re["error"]==0)
+                        {$(".digg_favor").html(re["value"]);}
+                     }
+                });
+        });
+        $(".digg_against").click(function () {
+                $(".digg_tip").html("提交中...");
+                $.ajax({
+                    url: "@(ci.WebPath)home/AjaxVote/",
+                    type: "post",
+                    data: {articleid:ArticleId,vote:0},
+                    dataType: 'json',
+                    success: function (re) {
+                        $(".digg_tip").html(re["message"]);
+                        if(re["error"]==0)
+                        {$(".digg_against").html(re["value"]);}
+                    }
+                });
+        });
+        KindEditor.ready(function (K) {
+            editorReply = K.create('textarea[name="Reply"]', {
+                allowImageUpload: true,
+                uploadJson: '@(ci.WebPath)admin/UploadFile',
+                items: [ 'emoticons','link']
+            });
+        });
+
+        $("#BtnSubmit").submit(function () {
+            editorReply.html(ReplaceKESpace(editorReply.html()));
+            editorReply.sync();
+        });
+
+        $(".commentpager a").live("click", function () {
+            GetComment($(this).attr("p"));
+        });
+
+        GetComment(1);
+    });
+
+    function GetComment(pageno) {
+        $('#comment').html('loading...');
+        $.get("@(ci.WebPath)home/CommentList/", { id: ArticleId, pageNo: pageno, rn: Math.random() }, function (re) {
+            $("#comment").html(re);
+        })
+    }
+
+    function ProcessSuccess(re) {
+        if (re == 0) {
+            var userinfo=$('#UserName').val();
+            if($('#Url').val().replace(/\s/g,"")!="")
+            {
+                userinfo="<a href=\"" + $('#Url').val() + "\" target=\"_blank\">" + $('#UserName').val() + "</a>"
+            }
+            $(".commentlist ul").append("<li><p>" + userinfo+" "+GetCurrentTime() + "</p>" + editorReply.html() + "</li>");
+            editorReply.html('');
+            $('#AjaxResult').show().html('提交成功，谢谢参与').hide(3000);
+        }
+        else {
+            $('#AjaxResult').show().html('提交失败').hide(3000);
+        }
+    }
+</script> 
+}

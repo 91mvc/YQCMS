@@ -1,0 +1,11 @@
+﻿@model YQCMS.Models.cms_varticle        
+@{YQCMS.General.GeneralConfigInfo ci = @ViewBag.CI as YQCMS.General.GeneralConfigInfo;} 
+<div class="article-left"></div>
+<div class="article-right"> 
+    <div class="web-path">您的位置是：@Html.ActionLink("主页", "Index", "Home") \ @Html.Raw(ViewBag.WebPath)</div>
+    <div class="article">
+        <h3 class="article_title hide">@Model.title</h3>
+        <div class="article_summary">@Html.Raw(Model.summary)</div>
+        <div class="article_content">@Html.Raw(Model.content)</div>
+    </div>
+</div>

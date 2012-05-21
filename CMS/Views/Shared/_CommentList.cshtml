@@ -1,0 +1,28 @@
+﻿@model IEnumerable<YQCMS.Models.cms_article>
+<h2 class="mt20">评论列表</h2>      
+<div class="commentlist" id="comments"> 
+<ul>
+    @if ((Model as IEnumerable<YQCMS.Models.cms_article>).Count() > 0)
+    {  
+        foreach (var item in Model)
+        {
+        <li id="@item.id" name="@item.id">
+            <p>
+            @if (item.summary!="")
+            {
+                <a href="@item.summary" target="_blank">@item.username</a>
+            }
+            else
+            {
+                @item.username
+            }
+
+         @(item.createdate)</p>
+        @Html.Raw(item.content)
+        </li>
+        }
+    }
+</ul>
+</div>
+<div class="commentpager">@Html.Raw(ViewBag.AjaxPager)
+</div>

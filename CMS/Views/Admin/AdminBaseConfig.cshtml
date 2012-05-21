@@ -1,0 +1,134 @@
+﻿@model YQCMS.General.GeneralConfigInfo
+@{YQCMS.General.GeneralConfigInfo ci = @ViewBag.CI as YQCMS.General.GeneralConfigInfo;}
+@section MenuInfo{
+<ul> 
+    <li><a href="@(ci.WebPath)admin/Index">- 管理首页 -</a></li>
+    <li><a href="@(ci.WebPath)admin/AdminArticle">- 内容管理 -</a></li>
+    <li class="selected">
+        <span class="selected-arrow">&nbsp;</span>
+        <a href="###">- 配置管理 -</a>
+        <ul>
+            <li  class="selected">@Html.ActionLink("基础设置", "AdminBaseConfig", "Admin")</li>
+            <li>@Html.ActionLink("分类设置", "AdminCategorySort", "Admin")</li>
+            <li class="v10">@Html.ActionLink("论坛配置", "AdminBBSConfig", "Admin")</li>
+            <li>@Html.ActionLink("转载配置", "AdminPublishWebConfig", "Admin")</li>
+        </ul>
+    </li>
+</ul>
+}
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script> 
+<div id="mainContent">
+        <div id="leftBox">
+          <div id="pagePath">
+          当前位置：基础设置
+          </div>
+
+          <div class="contentBox">
+            <div class="contentBoxTop">
+              <h3>基础设置</h3>
+            </div>
+            <div class="innerContent">
+                @using (Ajax.BeginForm("AdminBaseConfig", new AjaxOptions { LoadingElementId = "Loading", InsertionMode = InsertionMode.InsertBefore, OnSuccess = "ProcessSuccess" }))
+                {
+                    <div id="AjaxResult">
+            <div class="label">
+                            <div class="editor-label">
+                                @Html.LabelFor(m => m.Webtitle)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.Webtitle, new { style = "width: 500px;" })
+                                @Html.ValidationMessageFor(m => m.Webtitle)
+                            </div>
+            </div>
+            <div class="label">
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.WebDescription)
+                    </div>
+                    <div class="editor-field clstxtarea">
+                        @Html.TextAreaFor(model => model.WebDescription, new { style = "width: 500px; height:60px" })
+                        @Html.ValidationMessageFor(m => m.WebDescription)
+                    </div>
+            </div>
+            <div class="label">
+                            <div class="editor-label">
+                                @Html.LabelFor(m => m.Weburl)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.Weburl, new { style = "width: 500px;" })
+                                @Html.ValidationMessageFor(m => m.Weburl)
+                            </div>
+            </div>
+            <div class="label">
+                            <div class="editor-label">
+                                @Html.LabelFor(m => m.WebPath)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.WebPath, new { style = "width: 200px;" })
+                                @Html.ValidationMessageFor(m => m.WebPath)
+                            </div>
+            </div>
+            <div class="label">
+                            <div class="editor-label">
+                                @Html.LabelFor(m => m.Icp)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.Icp, new { style = "width: 200px;" })
+                                @Html.ValidationMessageFor(m => m.Icp)
+                            </div>
+            </div>
+            <div class="label">
+                            <div class="editor-label">
+                                @Html.LabelFor(m => m.IndexPagerCount)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.IndexPagerCount, new { style = "width: 30px;" })
+                                @Html.ValidationMessageFor(m => m.IndexPagerCount)
+                            </div>
+            </div>
+            <div class="label">
+                            <div class="editor-label">
+                                @Html.LabelFor(m => m.CatePagerCount)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.CatePagerCount, new { style = "width: 30px;" })
+                                @Html.ValidationMessageFor(m => m.CatePagerCount)
+                            </div>
+            </div>
+            <div class="label">
+                            <div class="editor-label">
+                                @Html.LabelFor(m => m.CommentPagerCount)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.CommentPagerCount, new { style = "width: 30px;" })
+                                @Html.ValidationMessageFor(m => m.CommentPagerCount)
+                            </div>
+            </div>
+            <div class="label">
+                            <div class="editor-label">
+                                @Html.LabelFor(m => m.NotePagerCount)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.NotePagerCount, new { style = "width: 30px;" })
+                                @Html.ValidationMessageFor(m => m.NotePagerCount)
+                            </div>
+            </div>
+                            <p>
+                                <input type="image" src="/Content@(ci.WebPath)image/admin/bt_submit.gif" name="BtnSubmit" id="BtnSubmit"> <span id="Loading" style="display:none;"> 提交中...</span>
+                            </p>
+                    </div>
+                }
+            </div><!--end of #box-3-->
+          </div>
+
+      </div><!-- end of #leftBox -->
+              
+  </div><!-- end of #content -->
+@section Js{
+<script type="text/javascript">
+    function ProcessSuccess(re) {
+        $('#AjaxResult').html(re);
+    }
+</script> 
+}

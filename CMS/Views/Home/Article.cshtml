@@ -1,0 +1,115 @@
+﻿@model YQCMS.Models.cms_varticle        
+@{YQCMS.General.GeneralConfigInfo ci = @ViewBag.CI as YQCMS.General.GeneralConfigInfo;} 
+@section Seo{
+    @Html.Raw(ViewBag.Seo)
+}
+<div class="article-left"></div>
+<div class="article-right"> 
+    <div class="web-path">您的位置是：@Html.ActionLink("主页", "Index", "Home") \ @Html.Raw(ViewBag.WebPath)</div>
+    <div class="article">
+        <h3 class="article_title">@Model.title</h3>
+        <div class="article_time">@Model.createdate 阅读(@Model.viewcount) 
+        @if (Model.subcount > 0)
+        {
+        <a href="#comment">评论(@Model.subcount)</a> 
+        }
+        </div>
+        <div class="article_summary">@Html.Raw(Model.summary)</div>
+        <div class="article_content">@Html.Raw(Model.content)</div>
+        @{
+            
+            string[] tagArray = Model.tags.Trim().Split(',');
+            if (tagArray.Length > 0 && Model.tags.Trim().Length>0)
+            {
+                @:标签：
+                for (int i = 0; i < Model.tags.Split(',').Length; i++)
+                {
+                     
+                    <a href="@(ci.WebPath)Tag/@System.Web.HttpUtility.UrlEncode(tagArray[i].Replace(".", "@"), System.Text.Encoding.UTF8).Replace("+", "%20")">@tagArray[i]</a>
+                }
+            }
+        }
+    </div>
+    <div class="digg fr">
+    <div class="digg_favor">@Model.favor</div>
+    <div class="digg_against">@Model.against</div>
+    <div class="digg_tip cl">@ViewBag.VoteTip</div>
+    </div>
+
+    <div class="prenextlink mt20">@Html.Raw(ViewBag.PreNextLink)</div>
+    @Html.Action("reply", "home", new { id = Model.id })
+</div>
+@section Js{
+<script type="text/javascript">
+    var ArticleId = @ViewBag.ArticleId;
+    $(function () {
+        $(".digg_favor").click(function () {
+                //$(".digg_tip").html("提交中...");
+                $.ajax({
+                    url: "@(ci.WebPath)home/AjaxVote/",
+                    type: "post",
+                    data: {articleid:ArticleId,vote:1},
+                    dataType: 'json',
+                    success: function (re) {
+                        $(".digg_tip").html(re["message"]);
+                        if(re["error"]==0)
+                        {$(".digg_favor").html(re["value"]);}
+                     }
+                });
+        });
+        $(".digg_against").click(function () {
+                //$(".digg_tip").html("提交中...");
+                $.ajax({
+                    url: "@(ci.WebPath)home/AjaxVote/",
+                    type: "post",
+                    data: {articleid:ArticleId,vote:0},
+                    dataType: 'json',
+                    success: function (re) {
+                        $(".digg_tip").html(re["message"]);
+                        if(re["error"]==0)
+                        {$(".digg_against").html(re["value"]);}
+                    }
+                });
+        });
+
+        $(".commentpager a").live("click", function () {
+            GetComment($(this).attr("p"));
+        });
+
+        GetComment(1);
+    });
+
+    function GetComment(pageno) {
+        $('#comment').html('loading...');
+        //        $.ajax({
+        //            url: "",
+        //            type: post,
+        //            data: {id:3},
+        //            success: function (result) { $('#result').html(result); }
+        //        });
+
+        $.get("@(ci.WebPath)home/CommentList/", { id: ArticleId, pageNo: pageno, rn: Math.random() }, function (re) {
+            $("#comment").html(re);
+        })
+    }
+
+    function ProcessSuccess(re) {
+        if (re == 0) {
+            var userinfo=$('#UserName').val();
+            if($('#Url').val().replace(/\s/g,"")!="")
+            {
+                userinfo="<a href=\"" + $('#Url').val() + "\" target=\"_blank\">" + $('#UserName').val() + "</a>"
+            }
+            $(".commentlist ul").append("<li><p>" + userinfo+" "+GetCurrentTime() + "</p>" + editorReply.html() + "</li>");
+            editorReply.html('');
+            $('#AjaxResult').show().html('提交成功，谢谢参与').hide(3000);
+        }
+        else {
+            $('#AjaxResult').show().html('提交失败').hide(3000);
+        }
+    }
+
+    //    $(function () { $('form').submit(function () { if ($(this).valid()) { $.ajax({ url: this.action, type: this.method, data: $(this).serialize(), success: function (result) { $('#result').html(result); } }); } return false; }); }); 
+
+</script> 
+}

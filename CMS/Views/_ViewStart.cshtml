@@ -1,0 +1,7 @@
+﻿@{if (Request.Url.AbsoluteUri.ToLower().Contains("admin") && !Request.Url.AbsoluteUri.ToLower().Contains("account"))
+  {
+      Layout = "~/Views/Shared/_AdminLayout.cshtml"; 
+  }else{
+      Layout = "~/Views/Shared/_Layout.cshtml"; 
+  }
+}

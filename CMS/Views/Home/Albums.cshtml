@@ -1,0 +1,39 @@
+﻿@model IEnumerable<YQCMS.Models.AlbumModel> 
+@{YQCMS.General.GeneralConfigInfo ci = @ViewBag.CI as YQCMS.General.GeneralConfigInfo;}
+<div class="web-path">您的位置是：@Html.ActionLink("主页", "Index", "Home") \ @Html.Raw(ViewBag.WebPath)</div>
+<div class="left"></div>
+<div class="right"> 
+<h2 class="mt20">相册列表</h2>
+@ViewBag.TestCache
+    @if ((Model as IEnumerable<YQCMS.Models.AlbumModel>).Count() > 0)
+    {
+        var headstr = "";
+        <div class="albumlist cc">
+            @foreach (var item in Model)
+            {
+                if (item.ImgCount > 0)
+                {
+                    if (headstr != item.AlbumCategory)
+                    {
+                        headstr = item.AlbumCategory;
+                        <div class="g-title cl mt20"><h2>@item.AlbumCategory</h2></div> 
+                    }
+                    <div class="album-box fl mr10">
+                      <div class="album-cover"><a href="@(ci.WebPath)home/album/@(item.Id)"><img src="/Content@(ci.WebPath)image/album/s@(item.Cover.Src)" alt="@item.Description"/></a></div>
+                      <p class="album-title">
+                           <a href="@(ci.WebPath)home/album/@(item.Id)">@(item.Title) (@item.ImgCount)</a>
+                           @if (item.CommentCount > 0)
+                           {   
+                            <a title="Comment" href="@(ci.WebPath)home/album/@(item.Id)#comments"> @(item.CommentCount) 条评论</a> 
+                           }  
+                      </p>
+                    </div>  
+                }
+            }
+        </div>
+    }
+    else
+    {
+        <div class="red p10">还没有数据。</div> 
+    }
+</div>

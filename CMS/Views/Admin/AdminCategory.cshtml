@@ -1,0 +1,57 @@
+﻿@{YQCMS.General.GeneralConfigInfo ci = @ViewBag.CI as YQCMS.General.GeneralConfigInfo;}
+@section MenuInfo{
+<ul> 
+    <li><a href="@(ci.WebPath)admin/Index">- 管理首页 -</a></li>
+    <li><a href="@(ci.WebPath)admin/AdminArticle">- 内容管理 -</a></li>
+    <li class="selected">
+        <span class="selected-arrow">&nbsp;</span>
+        <a href="###">- 配置管理 -</a>
+        <ul>
+            <li>@Html.ActionLink("基础设置", "AdminBaseConfig", "Admin")</li>
+            <li class="selected">@Html.ActionLink("分类设置", "AdminCategorySort", "Admin")</li>
+            <li class="v10">@Html.ActionLink("论坛配置", "AdminBBSConfig", "Admin")</li>
+            <li>@Html.ActionLink("转载配置", "AdminPublishWebConfig", "Admin")</li>
+        </ul>
+    </li>
+</ul>
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<div id="mainContent">
+        <div id="leftBox">
+          <div id="pagePath">
+          当前位置：分类设置
+          </div>
+
+          <div class="contentBox">
+            <div class="contentBoxTop">
+              <h3>分类设置</h3>
+            </div>
+            <div class="innerContent">
+                    <div id="re">
+                            <div class="editor-label">
+                            </div>
+                            <div class="editor-field">
+                               @Html.TextArea("content", ViewBag.Content as string, new { style = "width: 850px; height: 250px" })
+                            </div>
+                            <p>
+                            <input type="image" src="/Content@(ci.WebPath)image/admin/bt_submit.gif" name="BtnSubmit" onclick="Update()">
+                            <a style="display:none;" href="/Admin/RestoreCategory">重置分类信息</a>
+                            </p>
+                    </div>
+            </div><!--end of #box-3-->
+            <div class="catelink">@Html.ActionLink("分类用户界面管理", "AdminCategorySort", "Admin")</div>
+          </div>
+
+      </div><!-- end of #leftBox -->
+              
+  </div><!-- end of #content -->
+@section Js{
+    <script type="text/javascript">
+        function Update() {
+            $.post('@(ci.WebPath)Admin/AdminCategory', { content: $('#content').val() }, function (data) {
+                $('#re').html(data);
+            });
+        }
+    </script>
+}
